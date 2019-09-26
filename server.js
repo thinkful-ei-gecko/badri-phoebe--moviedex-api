@@ -53,13 +53,10 @@ server.get('/movie', function handleGetMovies (req, res) {
   //VALIDATE GENRES
   validateString(genre); //checks if genre is a string
   const validCountries = getCountries( movies ); 
+  console.log(validCountries);
   const validGenres = ['Animation', 'Drama', 'Comedy', 'Romantic', 'Drama', 'Crime', 'Horror', 'Documentary', 'Action', 'Thriller', 'Adventure', 'Fantasy', 'Musical', 'Biography', 'History', 'War', 'Grotesque', 'Western', 'Spy'];
   const lowercaseValidGenres = validGenres.map(genreName => genreName.toLowerCase());
-  if (!lowercaseValidGenres.includes(genre.toLowerCase())) {
-    return res
-      .status(400)
-      .json({ error: 'Genre must be one of the following: Animation, Drama, Comedy, Romantic, Drama, Crime, Horror, Documentary, Action, Thriller, Adventure, Fantasy, Musical, Biography, History, War, Grotesque, Western, Spy' });
-  } //checks if genre is a valid string
+  //checks if genre is a valid string
 
   //VALIDATE COUNTRY is a string
   validateString(country);
@@ -91,7 +88,7 @@ server.get('/movie', function handleGetMovies (req, res) {
 
   if (country) {
     if (!validCountries.includes(country)) {
-        return res.status(400).json({error: `Country should be on of {these}`})
+        return res.status(400).json({error: `Country should be on of ${validCountries}`})
     }
     results = movies.filter(movie =>
       movie
